@@ -10,6 +10,8 @@
 #PBS -o pbs_logs/
 #PBS -e pbs_logs/
 
+export WD=$PBS_O_WORKDIR
+
 export DIR="/rsgrps/bhurwitz/hurwitzlab/data/reference/patric_annot"
 
 if [[ -d $DIR ]]
@@ -18,5 +20,7 @@ fi
 
 cd $DIR
 
-time wget -nc -nd -r --no-parent -A '*.gff' ftp://ftp.patricbrc.org/patric2/patric3/genomes/
+time wget -o $WD/pbs_logs/$(date)-wget.log \
+    -nc -nd -r --no-parent \
+    -A '*.gff' ftp://ftp.patricbrc.org/patric2/patric3/genomes/
 
