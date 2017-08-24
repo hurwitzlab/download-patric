@@ -10,7 +10,12 @@
 #PBS -o pbs_logs/
 #PBS -e pbs_logs/
 
-cd /gsfs1/rsgrps/bhurwitz/hurwitzlab/data/reference/patric_annot/gff
+export DIR="/gsfs1/rsgrps/bhurwitz/hurwitzlab/data/reference/patric_annot/gff"
+
+if [[ -d $DIR ]]
+    then mkdir -p $DIR && cd $DIR
+    else cd $DIR
+fi
 
 time wget -nc -nd -r --no-parent -A '*.gff' ftp://ftp.patricbrc.org/patric2/patric3/genomes/
 
