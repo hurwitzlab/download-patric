@@ -12,7 +12,7 @@
 
 export WD=$PBS_O_WORKDIR
 
-export DIR="/rsgrps/bhurwitz/hurwitzlab/data/reference/patric_annot"
+export DIR="/rsgrps/bhurwitz/hurwitzlab/data/reference/patric_annot/gff"
 
 if [[ -d $DIR ]]
     then mkdir -p $DIR
@@ -20,7 +20,7 @@ fi
 
 cd $DIR
 
-time wget -o "$WD/pbs_logs/$(date)-wget.log" \
+time wget -o "$WD/pbs_logs/$0-wget.log" \
     -nc -nd -r --no-parent \
     -A '*RefSeq.gff' ftp://ftp.patricbrc.org/patric2/patric3/genomes/
 

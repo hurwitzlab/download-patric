@@ -10,7 +10,17 @@
 #PBS -o pbs_logs/
 #PBS -e pbs_logs/
 
-cd /gsfs1/rsgrps/bhurwitz/hurwitzlab/data/reference/patric_annot/patric_cds
+export WD=$PBS_O_WORKDIR
 
-time wget -nc -nd -r --no-parent -A "*.PATRIC.cds.tab" ftp://ftp.patricbrc.org/patric2/patric3/genomes/
+export DIR="/rsgrps/bhurwitz/hurwitzlab/data/reference/patric_annot/cdsTab"
+
+if [[ -d $DIR ]]
+    then mkdir -p $DIR
+fi
+
+cd $DIR
+
+time wget -o "$WD/pbs_logs/$0-wget.log" \
+    -nc -nd -r --no-parent \
+    -A '*RefSeq.cds.tab' ftp://ftp.patricbrc.org/patric2/current_release/tab/
 
