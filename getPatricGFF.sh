@@ -20,7 +20,7 @@ fi
 
 cd $DIR
 
-time wget -o $WD/pbs_logs/$(date)-wget.log \
+time wget -o "$WD/pbs_logs/$(date)-wget.log" \
     -nc -nd -r --no-parent \
-    -A '*.gff' ftp://ftp.patricbrc.org/patric2/patric3/genomes/
+    -A '*RefSeq.gff' ftp://ftp.patricbrc.org/patric2/patric3/genomes/
 
