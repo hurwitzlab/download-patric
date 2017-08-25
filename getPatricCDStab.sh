@@ -14,13 +14,13 @@ export WD=$PBS_O_WORKDIR
 
 export DIR="/rsgrps/bhurwitz/hurwitzlab/data/reference/patric_annot/cdsTab"
 
-if [[ -d $DIR ]]
-    then mkdir -p $DIR
+if [ ! -d "$DIR" ]; then
+    mkdir -p $DIR
 fi
 
 cd $DIR
 
-time wget -o "$WD/pbs_logs/$0-wget.log" \
+time wget -o "$WD/pbs_logs/$PBS_JOBNAME-wget.log" \
     -nc -nd -r --no-parent \
     -A '*RefSeq.cds.tab' ftp://ftp.patricbrc.org/patric2/current_release/tab/
 

@@ -10,13 +10,16 @@
 #PBS -o pbs_logs/
 #PBS -e pbs_logs/
 
+export WD=$PBS_O_WORKDIR
 export DIR="/rsgrps/bhurwitz/hurwitzlab/data/reference/patric_bacteria"
 
-if [[ -d $DIR ]]
-    then mkdir -p $DIR
+if [ ! -d $DIR ]; then 
+    mkdir -p $DIR
 fi
 
 cd $DIR
 
-time wget -nc -nd -r --no-parent -A '*.fna' ftp://ftp.patricbrc.org/patric2/patric3/genomes/
+time wget -o "$WD/pbs_logs/$PBS_JOBNAME-wget.log" \
+    -nc -nd -r --no-parent \
+    -A '*.fna' ftp://ftp.patricbrc.org/patric2/patric3/genomes/
 
