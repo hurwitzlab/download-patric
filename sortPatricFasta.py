@@ -7,5 +7,13 @@
 
 import os
 import shutils
-import plumbum
+from plumbum import local
+
+!pwd
+
+#read in that genome_summary file
+
+for path,names,files in os.walk(os.getcwd()):
+    for file in files:
+        print file
 

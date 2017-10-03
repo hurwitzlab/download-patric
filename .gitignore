@@ -32,3 +32,4 @@ Makefile.in
 
 /texinfo.tex
 pbs_logs
+simpler-tax.py

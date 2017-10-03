@@ -12,7 +12,9 @@
 
 export WD=$PBS_O_WORKDIR
 
-export DIR="/rsgrps/bhurwitz/hurwitzlab/data/reference/patric_bacteria"
+export DIR="/rsgrps/bhurwitz/hurwitzlab/data/reference/patric_bacteria/testgenomes"
+
+export LIST="/rsgrps/bhurwitz/hurwitzlab/data/reference/patric_metadata/genome_summary"
 
 if [ ! -d $DIR ]; then 
     mkdir -p $DIR
@@ -28,7 +30,7 @@ cd $DIR
 
 #kinda pseudo-code
 #TODO: fix me
-$WD/sortPatricFasta.py --in $DIR --outComplete $COMPLETE --outWGS $WGS
+$WD/sortPatricFasta.py --in $DIR --outComplete $COMPLETE --outWGS $WGS --list $LIST
 
 #time wget -o "$WD/pbs_logs/$PBS_JOBNAME-wget.log" \
 #    -nc -nd -r --no-parent \
