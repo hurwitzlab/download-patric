@@ -9,11 +9,41 @@ import os
 import shutils
 from plumbum import local
 
+#yay ipython magic!
 !pwd
+
+#change directory to where genomes are
+local.cwd.chdir(os.environ.get('DIR'))
+
+!pwd
+
+#set out dirs
+outcomplete = os.environ.get('COMPLETE')
+outwgs = os.environ.get('WGS')
+
+#doing this the lazy way without argparse because this is a one-off
+#script that I will likely never ever use again
+
+genome_info = open(os.environ.get('LIST'))
 
 #read in that genome_summary file
 
-for path,names,files in os.walk(os.getcwd()):
+#dictionary to hold genome id to whether its complete or wgs
+id_to_status = {}
+
+for line in genome_info:
+    line=line.rstrip('\n')
+    cols=line.split('\t')
+    id=cols[0]
+    status=cols[4]
+    id_to_status.update({id:status})
+
+#walk through files and move them into the correct dir
+for path,name,files in os.walk(os.getcwd()):
     for file in files:
-        print file
+        id=file.replace('.fna','')
+        if (id_to_status[id]=='WGS'):
+            shutil.copy(id+'.fna',outwgs)
+        else:
+            shutil.copy(id+'.fna',outcomplete)
 
