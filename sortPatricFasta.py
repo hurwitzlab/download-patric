@@ -43,8 +43,7 @@ for line in genome_info:
     id_to_status.update({id:status})
 
 #walk through files and move them into the correct dir
-for path,name,files in os.walk(os.getcwd()):
-    for file in files:
+for file in os.listdir(os.getcwd()):
         id=file.replace('.fna','')
 
         try:
@@ -55,8 +54,14 @@ for path,name,files in os.walk(os.getcwd()):
 
         if (status=='WGS'):
 #            print 'This would move %s to WGS dir' % (id)
-            shutil.move(id+'.fna',outwgs)
+            try:
+                shutil.move(id+'.fna',outwgs)
+            except IOError, e:
+                print 'Had trouble moving %s to %s.' % (id,outwgs)
         else:
 #            print 'This would move %s to COMPLETE dir' % (id)
-            shutil.move(id+'.fna',outcomplete)
+            try:
+                shutil.move(id+'.fna',outcomplete)
+            except IOError, e:
+                print 'Had trouble moving %s to %s.' % (id,outcomplete)
 
