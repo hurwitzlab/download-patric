@@ -1,7 +1,7 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 
 ################################################
-# ipython script to sort genomes into ##########
+# python script to sort genomes into ##########
 # complete and WGS status ######################
 ################################################
 
@@ -50,11 +50,13 @@ for path,name,files in os.walk(os.getcwd()):
         try:
             status = id_to_status[id]
         except KeyError, e:
-            print '%s is not found - error "%s"'.format(id,str(e))
-            continue
+            print '%s does not exist in id_to_status dictionary.' % (id)
+            print 'Must move manually.'
 
         if (status=='WGS'):
+#            print 'This would move %s to WGS dir' % (id)
             shutil.move(id+'.fna',outwgs)
         else:
+#            print 'This would move %s to COMPLETE dir' % (id)
             shutil.move(id+'.fna',outcomplete)
 
