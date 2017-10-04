@@ -6,16 +6,20 @@
 ################################################
 
 import os
-import shutils
+import shutil
 from plumbum import local
 
 #yay ipython magic!
-!pwd
+#nope this DOESNT WORK
+#STUPID IPYTHON
+#thing=!pwd 
+#print(thing) 
 
 #change directory to where genomes are
 local.cwd.chdir(os.environ.get('DIR'))
 
-!pwd
+#thing=!pwd
+#print(thing)
 
 #set out dirs
 outcomplete = os.environ.get('COMPLETE')
@@ -42,8 +46,15 @@ for line in genome_info:
 for path,name,files in os.walk(os.getcwd()):
     for file in files:
         id=file.replace('.fna','')
-        if (id_to_status[id]=='WGS'):
-            shutil.copy(id+'.fna',outwgs)
+
+        try:
+            status = id_to_status[id]
+        except KeyError, e:
+            print '%s is not found - error "%s"'.format(id,str(e))
+            continue
+
+        if (status=='WGS'):
+            shutil.move(id+'.fna',outwgs)
         else:
-            shutil.copy(id+'.fna',outcomplete)
+            shutil.move(id+'.fna',outcomplete)
 
