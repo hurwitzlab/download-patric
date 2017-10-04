@@ -44,24 +44,29 @@ for line in genome_info:
 
 #walk through files and move them into the correct dir
 for file in os.listdir(os.getcwd()):
-        id=file.replace('.fna','')
+       #so we only mess with actual fna files 
+        if str(file).endswith('fna'):
+           #strip fna for id matching 
+            id=file.replace('.fna','')
 
-        try:
-            status = id_to_status[id]
-        except KeyError, e:
-            print '%s does not exist in id_to_status dictionary.' % (id)
-            print 'Must move manually.'
+            try:
+                status = id_to_status[id]
+            except KeyError, e:
+                print '%s does not exist in id_to_status dictionary.' % (id)
+                print 'Must move manually.'
 
-        if (status=='WGS'):
-#            print 'This would move %s to WGS dir' % (id)
-            try:
-                shutil.move(id+'.fna',outwgs)
-            except IOError, e:
-                print 'Had trouble moving %s to %s.' % (id,outwgs)
-        else:
-#            print 'This would move %s to COMPLETE dir' % (id)
-            try:
-                shutil.move(id+'.fna',outcomplete)
-            except IOError, e:
-                print 'Had trouble moving %s to %s.' % (id,outcomplete)
+            if (status=='WGS'):
+    #            print 'This would move %s to WGS dir' % (id)
+                try:
+                    shutil.move(id+'.fna',outwgs)
+                except IOError, e:
+                    print 'Had trouble moving %s to %s.' % (id,outwgs)
+            elif (status=='Complete'):
+    #            print 'This would move %s to COMPLETE dir' % (id)
+                try:
+                    shutil.move(id+'.fna',outcomplete)
+                except IOError, e:
+                    print 'Had trouble moving %s to %s.' % (id,outcomplete)
+            else:
+                continue
 
